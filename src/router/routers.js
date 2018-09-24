@@ -56,7 +56,7 @@ export default [
         path: 'count_to_page',
         name: 'count_to_page',
         meta: {
-          icon: 'md-trending-up',
+          icon: 'ios-contact',
           title: '医生详情页'
         },
         component: () => import('@/view/components/count-to/count-to.vue')
@@ -65,7 +65,7 @@ export default [
         path: 'drag_list_page',
         name: 'drag_list_page',
         meta: {
-          icon: 'ios-infinite',
+          icon: 'md-person-add',
           title: '添加医生'
         },
         component: () => import('@/view/components/drag-list/drag-list.vue')
