@@ -142,6 +142,9 @@ export default [
   {
     path: '/join',
     name: 'join',
+    meta:{
+      hide:true
+    },
     component: Main,
     children: [
       {
@@ -151,7 +154,7 @@ export default [
           icon: '_qq',
           title: '挂号列表'
         },
-        component: () => import('@/view/join-page.vue')
+        component: () => import('@/view/join-page/join-page.vue')
       }
     ]
   },
