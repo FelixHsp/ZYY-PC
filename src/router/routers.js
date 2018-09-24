@@ -140,6 +140,22 @@ export default [
     ]
   },
   {
+    path: '/join',
+    name: 'join',
+    component: Main,
+    children: [
+      {
+        path: 'join_page',
+        name: 'join_page',
+        meta: {
+          icon: '_qq',
+          title: '挂号列表'
+        },
+        component: () => import('@/view/join-page.vue')
+      }
+    ]
+  },
+  {
     path: '/argu',
     name: 'argu',
     meta: {
