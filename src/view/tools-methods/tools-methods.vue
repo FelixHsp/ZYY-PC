@@ -1,74 +1,95 @@
 <template>
-  <div>
-    <Card shadow>
-      <Row>
-        <i-col span="4">
-          <Button @click="createTagParams">添加一个标签</Button>
-        </i-col>
-        <i-col span="20">
-          <p>动态路由，添加params</p>
-        </i-col>
-      </Row>
-    </Card>
-    <Card shadow style="margin-top: 10px;">
-      <Row>
-        <i-col span="4">
-          <Button @click="createTagQuery">添加一个标签</Button>
-        </i-col>
-        <i-col span="20">
-          <p>动态路由，添加query</p>
-        </i-col>
-      </Row>
-    </Card>
-  </div>
+    <Table border :columns="columns7" :data="data6"></Table>
 </template>
-
 <script>
-import { mapMutations } from 'vuex'
 export default {
-  name: 'tools_methods_page',
+  data () {
+    return {
+      columns7: [
+        {
+          title: 'Name',
+          key: 'name',
+          render: (h, params) => {
+            return h('div', [
+              h('Icon', {
+                props: {
+                  type: 'person'
+                }
+              }),
+              h('strong', params.row.name)
+            ])
+          }
+        },
+        {
+          title: 'Email',
+          key: 'emalie'
+        },
+        {
+          title: 'Creat-Time',
+          key: 'creattime'
+        },
+        {
+          title: 'Handle',
+          key: 'handle',
+          width: 150,
+          align: 'center',
+          render: (h, params) => {
+            return h('div', [
+              h(
+                'Button',
+                {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.remove(params.index)
+                    }
+                  }
+                },
+                '自定义删除'
+              )
+            ])
+          }
+        }
+      ],
+      data6: [
+        {
+          name: 'John Brown',
+          emalie: 'xxx@163.com',
+          creattime: '2016-10-1'
+        },
+        {
+          name: 'Jim Green',
+          emalie: 'xxx@163.com',
+          creattime: '2016-10-1'
+        },
+        {
+          name: 'Joe Black',
+          emalie: 'xxx@163.com',
+          creattime: '2016-10-1'
+        },
+        {
+          name: 'Jon Snow',
+          emalie: 'xxx@163.com',
+          creattime: '2016-10-1'
+        }
+      ]
+    }
+  },
   methods: {
-    ...mapMutations([
-      'addTag'
-    ]),
-    createTagParams () {
-      const id = parseInt(Math.random() * 100000)
-      const route = {
-        name: 'params',
-        params: {
-          id
-        },
-        meta: {
-          title: `动态路由-${id}`
-        }
-      }
-      this.addTag({
-        route: route,
-        type: 'push'
+    show (index) {
+      this.$Modal.info({
+        title: 'User Info',
+        content: `Name：${this.data6[index].name}<br>Age：${
+          this.data6[index].age
+        }<br>Address：${this.data6[index].address}`
       })
-      this.$router.push(route)
     },
-    createTagQuery () {
-      const id = parseInt(Math.random() * 100000)
-      const route = {
-        name: 'query',
-        query: {
-          id
-        },
-        meta: {
-          title: `参数-${id}`
-        }
-      }
-      this.addTag({
-        route: route,
-        type: 'push'
-      })
-      this.$router.push(route)
+    remove (index) {
+      this.data6.splice(index, 1)
     }
   }
 }
 </script>
-
-<style>
-
-</style>
