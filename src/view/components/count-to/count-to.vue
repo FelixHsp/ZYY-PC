@@ -50,13 +50,15 @@
           </div>
         </Card>
       </Col>
-      <Col span="7" class="add">
-        <Card>
-          <div style="text-align:center">
-              <Icon class="md-add" type="md-add" size="200" />
-          </div>
-        </Card>
-      </Col>
+      <div  @click="Add">
+        <Col span="7" class="add">
+          <Card>
+            <div style="text-align:center">
+                <Icon class="md-add" type="md-add" size="200" />
+            </div>
+          </Card>
+        </Col>
+      </div>
  </Row>
 
 </template>
@@ -68,6 +70,13 @@ export default {
   data () {
     return {
       index
+    }
+  },
+  methods: {
+    Add: function () {
+      this.$router.push({
+        name: 'drag_list_page'
+      })
     }
   }
 }
