@@ -47,9 +47,6 @@ export default {
 }
 </script>
 
-  </div>
-</template>
-
 <script>
 import qqFans from '@/assets/images/qq-fance.jpg'
 export default {
