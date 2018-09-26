@@ -111,8 +111,8 @@ export default [
     ]
   },
   {
-    path: '/update',
-    name: 'update',
+    path: '/illclass',
+    name: 'illclass',
     meta: {
       icon: 'md-cloud-upload',
       title: '病种分类'
@@ -120,41 +120,50 @@ export default [
     component: Main,
     children: [
       {
-        path: 'update_table_page',
-        name: 'update_table_page',
+        path: 'illclass_details_page',
+        name: 'illclass_details_page',
         meta: {
           icon: 'ios-document',
-          title: '病种详情'
+          title: '病种分类'
         },
-        component: () => import('@/view/update/update-table.vue')
+        component: () => import('@/view/illclass/illclass-details.vue')
       },
       {
-        path: 'update_paste_page',
-        name: 'update_paste_page',
+        path: 'illclass_add_page',
+        name: 'illclass_add_page',
         meta: {
           icon: 'md-clipboard',
           title: '添加病种'
         },
-        component: () => import('@/view/update/update-paste.vue')
+        component: () => import('@/view/illclass/illclass-add.vue')
+      },
+      {
+        path: 'illclass_page',
+        name: 'illclass_page',
+        meta: {
+          icon: 'md-clipboard',
+          title: '病种详情'
+        },
+        component: () => import('@/view/illclass/illclass.vue')
       }
     ]
   },
   {
-    path: '/join',
-    name: 'join',
+    path: '/list',
+    name: 'list',
     meta:{
       hide:true
     },
     component: Main,
     children: [
       {
-        path: 'join_page',
-        name: 'join_page',
+        path: 'list_page',
+        name: 'list_page',
         meta: {
           icon: '_qq',
           title: '挂号列表'
         },
-        component: () => import('@/view/join-page/join-page.vue')
+        component: () => import('@/view/registration/registration-list.vue')
       }
     ]
   },
