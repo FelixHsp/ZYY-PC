@@ -17,13 +17,20 @@
             </FormItem>
             <FormItem prop="goodat" class="formitem">
                 <Input type="text" v-model="formInline.goodat" placeholder="擅长病种">
-                    <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                    <Icon type="ios-bookmark-outline" slot="prepend"></Icon>
+                </Input>
+            </FormItem>
+            <FormItem prop="price" class="formitem">
+                <Input type="number" v-model="formInline.price" placeholder="挂号费用">
+                    <Icon type="ios-calculator-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
             <FormItem  prop="desc" class="formitem">
                 <Input v-model="formInline.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="医生简介"></Input>
             </FormItem>
-
+            <FormItem prop="data" class="formitem">
+                <DatePicker type="date" multiple placeholder="可挂号日期" style="width:300px"></DatePicker>
+            </FormItem>
             <FormItem>
                 <Button type="primary" @click="handleSubmit('formInline')">点击保存</Button>
             </FormItem>
@@ -38,7 +45,9 @@ export default {
         name: '',
         workyear: '',
         goodat: '',
-        desc: ''
+        desc: '',
+        data: '',
+        price: ''
       },
       ruleInline: {
         name: [
@@ -52,6 +61,9 @@ export default {
         ],
         desc: [
           { required: true, message: '请填写医生简介', trigger: 'blur' }
+        ],
+        price: [
+          { required: true, message: '请填写挂号费用', trigger: 'blur' }
         ]
       }
     }
@@ -79,7 +91,7 @@ export default {
     .formitem{
         /* background: blue; */
         position: absolute;
-        width: 200px;
+        width: 300px;
     }
     .formitem:nth-child(1){
         top: 0;
@@ -92,6 +104,12 @@ export default {
     }
     .formitem:nth-child(4){
         top: 210px;
+    }
+    .formitem:nth-child(5){
+        top: 280px;
+    }
+    .formitem:nth-child(6){
+        top: 350px;
     }
 
     .form button:nth-child(1){

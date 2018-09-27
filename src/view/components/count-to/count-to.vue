@@ -1,36 +1,47 @@
 <template>
  <Row>
-      <Col span="7">
+      <Col span="7" v-for="value in formInline" :key="value.index">
         <Card>
-          <div style="text-align:center">
+          <div style="text-align:center" >
               <img class="index-img" :src="index" alt="">
-              <h2>{{formInline.name}}</h2>
-              <h3>简介:{{formInline.desc}}</h3>
-              <Button type="primary" @click="modal1 = true">点击查看详情或修改</Button>
+              <h3>{{value.name}}</h3>
+              <h5>从医年限:{{value.workyear}}年</h5>
+              <h5>擅长病种:{{value.goodat}}</h5>
+              <h5>挂号费用:{{value.price}}元</h5>
+              <h5>医生简介:{{value.desc}}</h5>
+              <Button type="primary" @click="modal1 = true">点击进行修改</Button>
               <Modal
                 v-model="modal1"
                 @on-ok="ok"
                 @on-cancel="cancel">
                 <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
-                  <FormItem prop="name">
-                      <Input type="text" v-model="formInline.name" >
+                  <FormItem prop="name" class="formit">
+                      <Input type="text" v-model="value.name" placeholder="姓名">
                           <Icon type="ios-person-outline" slot="prepend"></Icon>
                       </Input>
                   </FormItem>
-                  <FormItem prop="workyear">
-                      <Input type="number" v-model="formInline.workyear" placeholder="从医年限">
-                          <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                  <FormItem prop="workyear" class="formit" >
+                      <Input type="number" v-model="value.workyear" placeholder="从医年限">
+                          <Icon type="ios-card-outline" slot="prepend"></Icon>
                       </Input>
                   </FormItem>
-                  <FormItem prop="goodat">
-                      <Input type="text" v-model="formInline.goodat" placeholder="擅长病种">
-                          <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                  <FormItem prop="goodat" class="formit">
+                      <Input type="text" v-model="value.goodat" placeholder="擅长病种">
+                          <Icon type="ios-bookmark-outline" slot="prepend"></Icon>
                       </Input>
                   </FormItem>
-                  <FormItem  prop="desc">
-                      <Input v-model="formInline.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="医生简介"></Input>
+                  <FormItem prop="price" class="formit">
+                      <Input type="number" v-model="value.price" placeholder="挂号费用">
+                          <Icon type="ios-calculator-outline" slot="prepend"></Icon>
+                      </Input>
                   </FormItem>
-                 </Form>
+                  <FormItem  prop="desc" class="formit">
+                      <Input v-model="value.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="医生简介"></Input>
+                  </FormItem>
+                  <FormItem prop="data" class="formit">
+                      <DatePicker type="date" v-model="value.data" multiple placeholder="可挂号日期" style="width:300px"></DatePicker>
+                  </FormItem>
+                </Form>
               </Modal>
 
           </div>
@@ -58,12 +69,16 @@ export default {
     return {
       index,
       modal1: false,
-      formInline: {
-        name: '张三主任',
-        workyear: '10',
-        goodat: '多囊卵巢综合征',
-        desc: 'XXXXXXXXXXXX'
-      }
+      formInline: [
+        {
+          name: '张三主任',
+          workyear: '10',
+          goodat: '多囊卵巢综合征',
+          desc: '十年从医经验，擅长多囊卵巢综合征的治疗',
+          price: '12',
+          data: '2018-09-05,2018-09-06,2018-09-07'
+        }
+      ]
     }
   },
   methods: {
@@ -85,15 +100,18 @@ export default {
 <style>
 .index-img{
     height: 250px;
-    width: 250px;
+    width: 200px;
 }
 .ivu-card-body{
-  height: 380px;
+  height: 450px;
 }
 .md-add{
-  margin-top:75px;
+  margin-top:100px ;
 }
 .add{
   cursor: pointer;
+}
+.formit{
+  width: 300px;
 }
 </style>
