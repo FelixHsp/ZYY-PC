@@ -11,15 +11,15 @@ import parentView from '@/components/parent-view'
  * }
  */
 
-export default [
-  {
+export default [{
     path: '/login',
     name: 'login',
     meta: {
       title: 'Login - 登录',
       hideInMenu: true
     },
-    component: () => import('@/view/login/login.vue')
+    component: () =>
+      import('@/view/login/login.vue')
   },
   {
     path: '/',
@@ -30,18 +30,17 @@ export default [
       hideInMenu: true,
       notCache: true
     },
-    children: [
-      {
-        path: '/home',
-        name: 'home',
-        meta: {
-          hideInMenu: true,
-          title: '首页',
-          notCache: true
-        },
-        component: () => import('@/view/single-page/home')
-      }
-    ]
+    children: [{
+      path: '/home',
+      name: 'home',
+      meta: {
+        hideInMenu: true,
+        title: '首页',
+        notCache: true
+      },
+      component: () =>
+        import('@/view/single-page/home')
+    }]
   },
   {
     path: '/components',
@@ -51,15 +50,15 @@ export default [
       title: '医生列表'
     },
     component: Main,
-    children: [
-      {
+    children: [{
         path: 'count_to_page',
         name: 'count_to_page',
         meta: {
           icon: 'ios-contact',
           title: '医生详情页'
         },
-        component: () => import('@/view/components/count-to/count-to.vue')
+        component: () =>
+          import('@/view/components/count-to/count-to.vue')
       },
       {
         path: 'drag_list_page',
@@ -68,7 +67,8 @@ export default [
           icon: 'md-person-add',
           title: '添加医生'
         },
-        component: () => import('@/view/components/drag-list/drag-list.vue')
+        component: () =>
+          import('@/view/components/drag-list/drag-list.vue')
       }
     ]
   },
@@ -79,37 +79,49 @@ export default [
       hide: true
     },
     component: Main,
-    children: [
-      {
-        path: 'tools_methods_page',
-        name: 'tools_methods_page',
-        meta: {
-          icon: 'ios-hammer',
-          title: '用户列表'
-        },
-        component: () => import('@/view/tools-methods/tools-methods.vue')
-      }
-    ]
+    children: [{
+      path: 'tools_methods_page',
+      name: 'tools_methods_page',
+      meta: {
+        icon: 'ios-hammer',
+        title: '用户列表'
+      },
+      component: () =>
+        import('@/view/tools-methods/tools-methods.vue')
+    }]
   },
   {
     path: '/directive',
     name: 'directive',
     meta: {
+      icon: 'ios-apps',
+      title: '就医列表',
       hide: true
     },
     component: Main,
-    children: [
-      {
+    children: [{
         path: 'directive_page',
         name: 'directive_page',
         meta: {
           icon: 'ios-navigate',
           title: '就医指南'
         },
-        component: () => import('@/view/directive/directive.vue')
-      }
+        component: () =>
+          import('@/view/directive/directive.vue')
+      },
+      {
+        path: '/page_list_page',
+        name: 'page_list_page',
+        meta: {
+          icon: 'md-add',
+          title: '文章详情页'
+        },
+        component: () =>
+          import('@/view/directive/page-list.vue')
+      },
     ]
   },
+
   {
     path: '/illclass',
     name: 'illclass',
@@ -174,8 +186,7 @@ export default [
       hideInMenu: true
     },
     component: Main,
-    children: [
-      {
+    children: [{
         path: 'params/:id',
         name: 'params',
         meta: {
@@ -183,7 +194,8 @@ export default [
           title: '动态路由',
           notCache: true
         },
-        component: () => import('@/view/argu-page/params.vue')
+        component: () =>
+          import('@/view/argu-page/params.vue')
       },
       {
         path: 'query',
@@ -193,7 +205,8 @@ export default [
           title: '带参路由',
           notCache: true
         },
-        component: () => import('@/view/argu-page/query.vue')
+        component: () =>
+          import('@/view/argu-page/query.vue')
       }
     ]
   },
@@ -203,7 +216,8 @@ export default [
     meta: {
       hideInMenu: true
     },
-    component: () => import('@/view/error-page/401.vue')
+    component: () =>
+      import('@/view/error-page/401.vue')
   },
   {
     path: '/500',
@@ -211,7 +225,8 @@ export default [
     meta: {
       hideInMenu: true
     },
-    component: () => import('@/view/error-page/500.vue')
+    component: () =>
+      import('@/view/error-page/500.vue')
   },
   {
     path: '*',
@@ -219,6 +234,7 @@ export default [
     meta: {
       hideInMenu: true
     },
-    component: () => import('@/view/error-page/404.vue')
+    component: () =>
+      import('@/view/error-page/404.vue')
   }
 ]
