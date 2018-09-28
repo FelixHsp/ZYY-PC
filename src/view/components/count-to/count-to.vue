@@ -1,14 +1,14 @@
 <template>
- <Row>
-      <Col span="7" v-for="value in formInline" :key="value.index">
+ <Row class="card">
+      <Col span="5" v-for="value in formInline" :key="value.index">
         <Card>
           <div style="text-align:center" >
-              <img class="index-img" :src="index" alt="">
-              <h3>医生姓名{{value.name}}</h3>
-              <h5>医生职称:{{value.goal}}</h5>
-              <h5>从医年限:{{value.workyear}}年</h5>
-              <h5>擅长病种:{{value.goodat}}</h5>
-              <h5>医生简介:{{value.desc}}</h5>
+              <img class="doctor-img" :src="doctor" alt="">
+              <p>医生姓名:{{value.name}}</p>
+              <p>医生职称:{{value.goal}}</p>
+              <p>从医年限:{{value.workyear}}年</p>
+              <p>擅长病种:{{value.goodat}}</p>
+              <p>医生简介:{{value.desc}}</p>
               <Button type="primary" @click="modal1 = true">点击进行修改</Button>
               <Modal
                 v-model="modal1"
@@ -45,8 +45,8 @@
         </Card>
       </Col>
 
-      <div  @click="Add">
-        <Col span="7" class="add">
+      <div  @click="Add" class="add">
+        <Col span="5" class="add">
           <Card>
             <div style="text-align:center">
                 <Icon class="md-add" type="md-add" size="200" />
@@ -59,12 +59,12 @@
 </template>
 
 <script>
-import index from '@/assets/images/index.jpg'
+import doctor from '@/assets/images/doctor.jpg'
 export default {
   name: 'count_to',
   data () {
     return {
-      index,
+      doctor,
       modal1: false,
       formInline: [
         {
@@ -95,12 +95,12 @@ export default {
 </script>
 
 <style>
-.index-img{
-    height: 250px;
-    width: 200px;
+.doctor-img{
+    height: 200px;
+    width: 150px;
 }
 .ivu-card-body{
-  height: 450px;
+  height: 400px;
 }
 .md-add{
   margin-top:100px ;
@@ -110,5 +110,15 @@ export default {
 }
 .formit{
   width: 300px;
+}
+.card p{
+  text-align: left;
+  margin-left: 35px;
+  color: #999;
+  font-size: 13px;
+  margin-top: 2px;
+}
+.card button{
+  margin-top: 10px;
 }
 </style>
