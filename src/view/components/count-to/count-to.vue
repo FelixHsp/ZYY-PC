@@ -1,5 +1,5 @@
 <template>
- <Row class="card">
+ <Row class="card-doctor">
       <Col span="5" v-for="value in formInline" :key="value.index">
         <Card>
           <div style="text-align:center" >
@@ -111,14 +111,14 @@ export default {
 .formit{
   width: 300px;
 }
-.card p{
+.card-doctor p{
   text-align: left;
   margin-left: 35px;
   color: #999;
   font-size: 13px;
   margin-top: 2px;
 }
-.card button{
+.card-doctor button{
   margin-top: 10px;
 }
 </style>
