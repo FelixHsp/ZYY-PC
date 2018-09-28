@@ -10,6 +10,11 @@
                     <Icon type="ios-person-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
+            <FormItem prop="goal" class="formitem">
+                <Input type="text" v-model="formInline.price" placeholder="医生职称">
+                    <Icon type="ios-calculator-outline" slot="prepend"></Icon>
+                </Input>
+            </FormItem>
             <FormItem prop="workyear" class="formitem">
                 <Input type="number" v-model="formInline.workyear" placeholder="从医年限">
                     <Icon type="ios-lock-outline" slot="prepend"></Icon>
@@ -20,16 +25,8 @@
                     <Icon type="ios-bookmark-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
-            <FormItem prop="price" class="formitem">
-                <Input type="number" v-model="formInline.price" placeholder="挂号费用">
-                    <Icon type="ios-calculator-outline" slot="prepend"></Icon>
-                </Input>
-            </FormItem>
             <FormItem  prop="desc" class="formitem">
                 <Input v-model="formInline.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="医生简介"></Input>
-            </FormItem>
-            <FormItem prop="data" class="formitem">
-                <DatePicker type="date" multiple placeholder="可挂号日期" style="width:300px"></DatePicker>
             </FormItem>
             <FormItem>
                 <Button type="primary" @click="handleSubmit('formInline')">点击保存</Button>
@@ -46,8 +43,7 @@ export default {
         workyear: '',
         goodat: '',
         desc: '',
-        data: '',
-        price: ''
+        goal: ''
       },
       ruleInline: {
         name: [
@@ -62,8 +58,8 @@ export default {
         desc: [
           { required: true, message: '请填写医生简介', trigger: 'blur' }
         ],
-        price: [
-          { required: true, message: '请填写挂号费用', trigger: 'blur' }
+        goal: [
+          { required: true, message: '请填写医生职称', trigger: 'blur' }
         ]
       }
     }
