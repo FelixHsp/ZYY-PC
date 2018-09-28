@@ -1,5 +1,5 @@
 <template>
-      <img class="index-img" :src="index" alt="">
+    <img class="index-img" :src="index" alt="">
 </template>
 
 <script>
