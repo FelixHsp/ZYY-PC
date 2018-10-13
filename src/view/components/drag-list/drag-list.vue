@@ -11,7 +11,7 @@
                 </Input>
             </FormItem>
             <FormItem prop="goal" class="formitem">
-                <Input type="text" v-model="formInline.price" placeholder="医生职称">
+                <Input type="text" v-model="formInline.goal" placeholder="医生职称">
                     <Icon type="ios-calculator-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
