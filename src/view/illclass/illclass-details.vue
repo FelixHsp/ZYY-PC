@@ -112,7 +112,7 @@ color: #000;
 #card{
   text-align: center;
   width: 600px;
-  height: 500px;
+  height: 400px;
   position: absolute;
   left: 400px;
   top: 100px;
