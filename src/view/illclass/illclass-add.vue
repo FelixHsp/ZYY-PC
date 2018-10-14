@@ -18,7 +18,7 @@ export default {
 <script>
 import { getArrayFromFile, getTableDataFromArray } from '@/libs/util'
 export default {
-  name: 'update_table_page',
+  name: 'illclass_add_page',
   data () {
     return {
       formItem: {

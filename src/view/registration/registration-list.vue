@@ -27,12 +27,25 @@ export default {
 
 <script>
 import qqFans from '@/assets/images/qq-fance.jpg'
+import { getTableData } from '@/api/data'
 export default {
-  name: 'join_page',
+  name: 'list_page',
   data () {
     return {
-      
+      tableData:{
+
+      }
     }
+  },
+  methods: {
+    // shishi(){
+    //   getTableData().then(res => {
+    //     console.log(res.data.data);
+    //     this.tableData = res.data.data;
+    //   }).catch(err => {
+    //     console.log(err)
+    //   })
+    // }
   }
 }
 </script>
