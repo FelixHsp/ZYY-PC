@@ -6,7 +6,7 @@
     <Form-item label="病种描述">
       <i-input :value.sync="formItem.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入..."></i-input>
     </Form-item>
-    <i-button type="primary">保存</i-button>
+    <i-button type="primary" @click="info">保存</i-button>
   </i-form>
 </template>
 <script>
@@ -35,8 +35,10 @@ export default {
     }
   },
   methods: {
-
-  }
+    info () {
+      this.$Message.info('添加成功');
+    }
+}
 }
 </script>
 

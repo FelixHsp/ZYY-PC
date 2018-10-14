@@ -149,15 +149,6 @@ export default [{
         },
         component: () => import('@/view/illclass/illclass-add.vue')
       },
-      {
-        path: 'illclass_page',
-        name: 'illclass_page',
-        meta: {
-          icon: 'md-clipboard',
-          title: '病种详情'
-        },
-        component: () => import('@/view/illclass/illclass.vue')
-      }
     ]
   },
   {
