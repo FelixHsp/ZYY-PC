@@ -1,6 +1,6 @@
 <template>
  <Row class="card-doctor">
-      <Col span="5" v-for="value in formInline" :key="value.index">
+      <Col span="5" v-for="(value,index) in formInline" :key="value.index">
         <Card>
           <div style="text-align:center" >
               <img class="doctor-img" :src="doctor" alt="">
@@ -9,42 +9,10 @@
               <p>从医年限:{{value.workyear}}年</p>
               <p>擅长病种:{{value.goodat}}</p>
               <p>医生简介:{{value.desc}}</p>
-              <Button type="primary" @click="modal1 = true">点击进行修改</Button>
-              <Modal
-                v-model="modal1"
-                @on-ok="ok"
-                @on-cancel="cancel">
-                <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
-                  <FormItem prop="name" class="formit">
-                      <Input type="text" v-model="value.name" placeholder="姓名">
-                          <Icon type="ios-person-outline" slot="prepend"></Icon>
-                      </Input>
-                  </FormItem>
-                  <FormItem prop="goal" class="formit">
-                      <Input type="text" v-model="value.goal" placeholder="主任医生">
-                          <Icon type="ios-calculator-outline" slot="prepend"></Icon>
-                      </Input>
-                  </FormItem>
-                  <FormItem prop="workyear" class="formit" >
-                      <Input type="number" v-model="value.workyear" placeholder="从医年限">
-                          <Icon type="ios-card-outline" slot="prepend"></Icon>
-                      </Input>
-                  </FormItem>
-                  <FormItem prop="goodat" class="formit">
-                      <Input type="text" v-model="value.goodat" placeholder="擅长病种">
-                          <Icon type="ios-bookmark-outline" slot="prepend"></Icon>
-                      </Input>
-                  </FormItem>
-                  <FormItem  prop="desc" class="formit">
-                      <Input v-model="value.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="医生简介"></Input>
-                  </FormItem>
-                </Form>
-              </Modal>
-
+              <Button type="primary" @click="correct(index)">点击进行修改</Button>
           </div>
         </Card>
       </Col>
-
       <div  @click="Add" class="add">
         <Col span="5" class="add">
           <Card>
@@ -53,6 +21,30 @@
             </div>
           </Card>
         </Col>
+      </div>
+      <div class="correct">
+        <Modal
+          v-model="modal1"
+          title="修改医生信息"
+          @on-ok="ok"
+          @on-cancel="cancel"
+          >
+          <Input v-model="correctdoc.name" class="correctinput">
+            <Icon type="ios-contact-outline" slot="prefix" />
+          </Input>
+          <Input v-model="correctdoc.goal" class="correctinput">
+            <Icon type="ios-briefcase-outline" slot="prefix" />
+          </Input>
+          <Input v-model="correctdoc.workyear" class="correctinput">
+            <Icon type="ios-bookmark-outline" slot="prefix" />
+          </Input>
+          <Input v-model="correctdoc.goodat" class="correctinput">
+            <Icon type="ios-medkit-outline" slot="prefix" />
+          </Input>
+          <Input v-model="correctdoc.desc" class="correctinput">
+            <Icon type="ios-paper-outline" slot="prefix" />
+          </Input>
+        </Modal>
       </div>
  </Row>
 
@@ -72,10 +64,19 @@ export default {
           workyear: '10',
           goodat: '多囊卵巢综合征',
           desc: '十年从医经验，擅长多囊卵巢综合征的治疗',
-          goal: '主任医生',
-          data: '2018-09-05,2018-09-06,2018-09-07'
+          goal: '主任医生'
+        },
+        {
+          name: '李四',
+          workyear: '5',
+          goodat: '多囊卵巢综合征',
+          desc: '五年从医经验，善于与患者沟通',
+          goal: '副主任医生'
         }
-      ]
+      ],
+      correctdoc: {
+
+      }
     }
   },
   methods: {
@@ -89,6 +90,10 @@ export default {
     },
     cancel () {
       this.$Message.info('Clicked cancel')
+    },
+    correct (index) {
+      this.modal1 = true
+      this.correctdoc = this.formInline[index]
     }
   }
 }
@@ -120,5 +125,9 @@ export default {
 }
 .card-doctor button{
   margin-top: 10px;
+}
+.correctinput{
+  margin-bottom: 10px;
+  width: 280px;
 }
 </style>
