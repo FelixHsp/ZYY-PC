@@ -7,6 +7,13 @@ export const getTableData = () => {
   })
 }
 
+export const getIllData = () => {
+  return axios.request({
+    url: 'http://localhost/zyy/User/allills',
+    method: 'get'
+  })
+}
+
 export const getDragList = () => {
   return axios.request({
     url: 'get_drag_list',
