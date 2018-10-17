@@ -56,7 +56,6 @@ export default {
   created() {
     getData().then(res => {
         this.Data = res.data.data;
-        console.log(this.Data);
         this.Data.forEach(val => {
           if(val.r_tag == "未过期"){
             this.left.push(val);
