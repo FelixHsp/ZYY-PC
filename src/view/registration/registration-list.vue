@@ -2,18 +2,18 @@
   <div>
     <Tabs type="card">
         <Tab-pane label="当前挂号">
-          <card><div>
-            <span class="span">用户名：ccc </span>
-            <span class="span">挂号医生：ccc</span>
-            <span class="span">挂号日期：...</span>
+          <card v-for="(val,idx) in left" :key="idx"><div>
+            <span class="span">用户名：{{val.r_uid}}</span>
+            <span class="span">挂号医生：{{val.r_did}}</span>
+            <span class="span">挂号日期：{{val.r_time}}</span>
           </div></card>
         </Tab-pane>
         <Tab-pane label="往期挂号">
-          <card><div>
-            <span class="span">用户名：ccc </span>
-            <span class="span">挂号医生：ccc</span>
-            <span class="span">挂号日期：...</span>
-            <span class="span">就诊情况：已就诊</span>
+          <card v-for="(val,idx) in right" :key="idx"><div>
+            <span class="span">用户名：{{val.r_uid}}</span>
+            <span class="span">挂号医生：{{val.r_did}}</span>
+            <span class="span">挂号日期：{{val.r_time}}</span>
+            <span class="span">就诊情况：{{val.yorn}}</span>
           </div></card>
         </Tab-pane>
     </Tabs>
@@ -27,14 +27,20 @@ export default {
 
 <script>
 import qqFans from '@/assets/images/qq-fance.jpg'
-import { getTableData } from '@/api/data'
+import { getData } from '@/api/data'
 export default {
   name: 'list_page',
   data () {
     return {
-      tableData:{
+      Data:{
 
-      }
+      },
+      left:[
+
+      ],
+      right:[
+
+      ]
     }
   },
   methods: {
@@ -46,6 +52,21 @@ export default {
     //     console.log(err)
     //   })
     // }
+  },
+  created() {
+    getData().then(res => {
+        this.Data = res.data.data;
+        console.log(this.Data);
+        this.Data.forEach(val => {
+          if(val.r_tag == "未过期"){
+            this.left.push(val);
+          }else{
+            this.right.push(val);
+          }
+        });
+      }).catch(err => {
+        console.log(err)
+      })
   }
 }
 </script>
