@@ -140,16 +140,16 @@ export default {
     height: 200px;
     width: 150px;
 }
-.ivu-card-body{
+.card-doctor .ivu-card-body{
   height: 400px;
 }
-.md-add{
+.card-doctor .md-add{
   margin-top:100px ;
 }
-.add{
+.card-doctor .add{
   cursor: pointer;
 }
-.formit{
+.card-doctor .formit{
   width: 300px;
 }
 .card-doctor p{
