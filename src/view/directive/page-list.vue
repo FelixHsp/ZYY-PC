@@ -2,7 +2,7 @@
     <Card style="width:500px;height:600px">
         <p slot="title">
             <Icon type="ios-film-outline"></Icon>
-            养生文章
+            {{}}
         </p>
         <a href="#" slot="extra" @click.prevent="changeLimit">
             <Icon type="ios-loop-strong"></Icon>
@@ -32,6 +32,7 @@ Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et 
 
     </Card>
 </template>
+// 传
 
 <script>
 export default {

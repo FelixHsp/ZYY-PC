@@ -1,25 +1,89 @@
 <template>
     <div>
-        <Card style="padding: 10px;margin: 20px">
-            <p slot="title">养生文章1</p>
-            <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
-            <a style="color: #3399ff;font-size: 10px;float: right" @click="goDetail">查看详情</a>
-        </Card>
-        <Card style="padding: 10px;margin: 20px">
-            <p slot="title">养生文章1</p>
-            <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
-            <a style="color: #3399ff;font-size: 10px;float: right" @click="goDetail">查看详情</a>
-        </Card>
-        <Card style="padding: 10px;margin: 20px">
-            <p slot="title">养生文章1</p>
-            <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
-            <a style="color: #3399ff;font-size: 10px;float: right" @click="goDetail">查看详情</a>
-        </Card>
-
+      <div v-for="value in formInline" :key="value.index">
+        {{value.article_title}}
+      </div>
     </div>
-</template>
-<script>
-export default {
 
-}
+</template>
+
+<script>
+import axios from "axios"
+export default {
+  name: "directive",
+  data() {
+    return {
+      doctor,
+      modal1: false,
+      formInline: [],
+      correctdoc: {}
+    };
+  },
+  created() {
+    this.send();
+  },
+  methods: {
+    Add: function() {
+      this.$router.push({
+        name: "drag_list_page"
+      });
+    },
+    ok() {
+      this.$Message.info("Clicked ok");
+      axios({
+        url: 'http://localhost/zyy/user/article',
+        method: 'post',
+        data: this.formInline,
+        transformRequest: function (obj) {
+          var str = []
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]))
+          }
+          return str.join('&')
+        }
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    cancel() {
+      this.$Message.info("Clicked cancel");
+      this.send();
+      axios({
+        url: "http://localhost/zyy/user/article",
+        method: "post",
+        data: this.correctdoc,
+        transformRequest: function(obj) {
+          var str = [];
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          }
+          return str.join("&");
+        }
+      })
+        .then(res => {
+          // console.log(res);
+        })
+        .catch(err => {
+          // console.log(err);
+        });
+    },
+    correct(index) {
+      this.modal1 = true;
+      this.correctdoc = this.formInline[index];
+    },
+    send() {
+      axios({
+        method: "get",
+        url: "http://localhost/zyy/user/article"
+      }).then(res => {
+        this.formInline = res.data;
+        console.log(this.formInline);
+      });
+    }
+  }
+};
 </script>
