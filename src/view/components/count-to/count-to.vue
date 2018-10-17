@@ -4,11 +4,11 @@
         <Card>
           <div style="text-align:center" >
               <img class="doctor-img" :src="doctor" alt="">
-              <p>医生姓名:{{value.name}}</p>
-              <p>医生职称:{{value.goal}}</p>
-              <p>从医年限:{{value.workyear}}年</p>
-              <p>擅长病种:{{value.goodat}}</p>
-              <p>医生简介:{{value.desc}}</p>
+              <p>医生姓名:{{value.doctor_name}}</p>
+              <p>医生职称:{{value.doctor_place}}</p>
+              <p>从医年限:{{value.doctor_job}}年</p>
+              <p>擅长病种:{{value.doctor_special}}</p>
+              <p>医生简介:{{value.doctor_message}}</p>
               <Button type="primary" @click="correct(index)">点击进行修改</Button>
           </div>
         </Card>
@@ -28,30 +28,35 @@
           title="修改医生信息"
           @on-ok="ok"
           @on-cancel="cancel"
+          cancelText= '删除'
           >
-          <Input v-model="correctdoc.name" class="correctinput">
-            <Icon type="ios-contact-outline" slot="prefix" />
-          </Input>
-          <Input v-model="correctdoc.goal" class="correctinput">
-            <Icon type="ios-briefcase-outline" slot="prefix" />
-          </Input>
-          <Input v-model="correctdoc.workyear" class="correctinput">
-            <Icon type="ios-bookmark-outline" slot="prefix" />
-          </Input>
-          <Input v-model="correctdoc.goodat" class="correctinput">
-            <Icon type="ios-medkit-outline" slot="prefix" />
-          </Input>
-          <Input v-model="correctdoc.desc" class="correctinput">
-            <Icon type="ios-paper-outline" slot="prefix" />
-          </Input>
+          <Form>
+            </FormItem>
+              <Input v-model="correctdoc.doctor_name" class="correctinput" name="name">
+                <Icon type="ios-contact-outline" slot="prefix" />
+              </Input>
+            </FormItem>
+            <Input v-model="correctdoc.doctor_place" class="correctinput" name="goal">
+              <Icon type="ios-briefcase-outline" slot="prefix" />
+            </Input>
+            <Input v-model="correctdoc.doctor_job" class="correctinput" name="time">
+              <Icon type="ios-bookmark-outline" slot="prefix" />
+            </Input>
+            <Input v-model="correctdoc.doctor_special" class="correctinput" name="special">
+              <Icon type="ios-medkit-outline" slot="prefix" />
+            </Input>
+            <Input v-model="correctdoc.doctor_message" class="correctinput" name="desc">
+              <Icon type="ios-paper-outline" slot="prefix" />
+            </Input>
+          </Form>
         </Modal>
       </div>
  </Row>
-
 </template>
 
 <script>
 import doctor from '@/assets/images/doctor.jpg'
+import axios from 'axios'
 export default {
   name: 'count_to',
   data () {
@@ -59,25 +64,14 @@ export default {
       doctor,
       modal1: false,
       formInline: [
-        {
-          name: '张三',
-          workyear: '10',
-          goodat: '多囊卵巢综合征',
-          desc: '十年从医经验，擅长多囊卵巢综合征的治疗',
-          goal: '主任医生'
-        },
-        {
-          name: '李四',
-          workyear: '5',
-          goodat: '多囊卵巢综合征',
-          desc: '五年从医经验，善于与患者沟通',
-          goal: '副主任医生'
-        }
       ],
       correctdoc: {
 
       }
     }
+  },
+  created () {
+    this.send()
   },
   methods: {
     Add: function () {
@@ -87,13 +81,55 @@ export default {
     },
     ok () {
       this.$Message.info('Clicked ok')
+      axios({
+        url: 'http://localhost/zyy1/doctor/redoc',
+        method: 'post',
+        data: this.correctdoc,
+        transformRequest: function (obj) {
+          var str = []
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]))
+          }
+          return str.join('&')
+        }
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
     },
     cancel () {
       this.$Message.info('Clicked cancel')
+      this.send()
+      axios({
+        url: 'http://localhost/zyy1/doctor/deldoc',
+        method: 'post',
+        data: this.correctdoc,
+        transformRequest: function (obj) {
+          var str = []
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]))
+          }
+          return str.join('&')
+        }
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
     },
     correct (index) {
       this.modal1 = true
       this.correctdoc = this.formInline[index]
+    },
+    send () {
+      axios({
+        method: 'get',
+        url: 'http://localhost/zyy1/doctor/getdoc'
+      }).then((res) => {
+        this.formInline = res.data
+        console.log(this.formInline)
+      })
     }
   }
 }
@@ -123,8 +159,13 @@ export default {
   font-size: 13px;
   margin-top: 2px;
 }
+.card-doctor{
+  position: relative;
+}
 .card-doctor button{
-  margin-top: 10px;
+  position: absolute;
+  bottom: 20px;
+  transform: translate(-50%,0)
 }
 .correctinput{
   margin-bottom: 10px;

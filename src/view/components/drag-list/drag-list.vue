@@ -1,40 +1,41 @@
 <template>
     <div class="form">
-
-        <Upload action="//jsonplaceholder.typicode.com/posts/">
+        <Upload v-model="formInline.img">
             <Button icon="ios-cloud-upload-outline">点击上传照片</Button>
         </Upload>
-         <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
+         <Form ref="formInline" :model="formInline" :rules="ruleInline" method="post" inline>
             <FormItem prop="name" class="formitem">
-                <Input type="text" v-model="formInline.name" placeholder="姓名">
+                <Input type="text" v-model="formInline.name" placeholder="姓名" name="name">
                     <Icon type="ios-person-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
             <FormItem prop="goal" class="formitem">
-                <Input type="text" v-model="formInline.goal" placeholder="医生职称">
+                <Input type="text" v-model="formInline.goal" placeholder="医生职称" name="goal">
                     <Icon type="ios-calculator-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
             <FormItem prop="workyear" class="formitem">
-                <Input type="number" v-model="formInline.workyear" placeholder="从医年限">
+                <Input type="number" v-model="formInline.workyear" placeholder="从医年限" name="time">
                     <Icon type="ios-lock-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
             <FormItem prop="goodat" class="formitem">
-                <Input type="text" v-model="formInline.goodat" placeholder="擅长病种">
+                <Input type="text" v-model="formInline.goodat" placeholder="擅长病种" name="special">
                     <Icon type="ios-bookmark-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
             <FormItem  prop="desc" class="formitem">
-                <Input v-model="formInline.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="医生简介"></Input>
+                <Input v-model="formInline.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="医生简介" name="desc"></Input>
             </FormItem>
             <FormItem>
-                <Button type="primary" @click="handleSubmit('formInline')">点击保存</Button>
+                <Button type="primary" @click="submit()">点击保存</Button>
+                <!-- <input type="submit" @click="handleSubmit('formInline')" id="submit"> -->
             </FormItem>
         </Form>
     </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -43,7 +44,8 @@ export default {
         workyear: '',
         goodat: '',
         desc: '',
-        goal: ''
+        goal: '',
+        img: ''
       },
       ruleInline: {
         name: [
@@ -72,6 +74,25 @@ export default {
         } else {
           this.$Message.error('Fail!')
         }
+      })
+    },
+    submit () {
+      alert('添加成功')
+      axios({
+        url: 'http://localhost/zyy1/doctor/adddoc',
+        method: 'post',
+        data: this.formInline,
+        transformRequest: function (obj) {
+          var str = []
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]))
+          }
+          return str.join('&')
+        }
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
       })
     }
   }
@@ -110,7 +131,7 @@ export default {
 
     .form button:nth-child(1){
         position: absolute;
-        top: 500px;
+        top: 400px;
     }
     .form button:nth-child(2){
         position: absolute;
