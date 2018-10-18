@@ -114,7 +114,7 @@ export default [{
         name: 'page_list_page',
         meta: {
           icon: 'md-add',
-          title: '文章详情页'
+          title: '添加文章'
         },
         component: () =>
           import('@/view/directive/page-list.vue')

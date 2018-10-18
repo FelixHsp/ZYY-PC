@@ -45,7 +45,6 @@ export default {
 
 <script>
 import PasteEditor from '_c/paste-editor'
-import { getTableDataFromArray } from '@/libs/util'
 import { getIllData } from '@/api/data'
 export default {
   name: 'illclass_details_page',
