@@ -1,14 +1,18 @@
 <template>
-    <div>
-      <div v-for="value in formInline" :key="value.index">
-        {{value.article_title}}
-      </div>
-    </div>
-
+    <Row>
+        <Col span="22" offset="1" v-for="value in formInline" :key="value.index">
+            <Card dis-hover>
+                <p slot="title">{{value.article_title}}</p>
+                <p style="font-size: 12px;color: #000">文章作者：{{value.article_id}}  文章类型：{{value.article_class}}</p>
+                <p>{{value.article_content}}</p>
+                <p style="color: #3399ff;font-size: 10px;float: right" @click="goDetail(index)">查看详情</p>
+            </Card>            
+        </Col>
+    </Row>
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 export default {
   name: "directive",
   data() {
@@ -25,21 +29,21 @@ export default {
   methods: {
     Add: function() {
       this.$router.push({
-        name: "drag_list_page"
+        name: "page-list"
       });
     },
     ok() {
       this.$Message.info("Clicked ok");
       axios({
-        url: 'http://localhost/zyy/user/article',
-        method: 'post',
+        url: "http://localhost/zyy/user/article",
+        method: "post",
         data: this.formInline,
-        transformRequest: function (obj) {
-          var str = []
+        transformRequest: function(obj) {
+          var str = [];
           for (var p in obj) {
-            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]))
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
           }
-          return str.join('&')
+          return str.join("&");
         }
       })
         .then(res => {
@@ -65,13 +69,13 @@ export default {
         }
       })
         .then(res => {
-          // console.log(res);
+          console.log(res);
         })
         .catch(err => {
-          // console.log(err);
+          console.log(err);
         });
     },
-    correct(index) {
+    goDetail(index) {
       this.modal1 = true;
       this.correctdoc = this.formInline[index];
     },

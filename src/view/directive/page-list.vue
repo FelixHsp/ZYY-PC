@@ -36,6 +36,7 @@ Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et 
 
 <script>
 export default {
+  name: 'page-list',
   data () {
     return {}
   },
