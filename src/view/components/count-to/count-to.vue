@@ -82,7 +82,7 @@ export default {
     ok () {
       this.$Message.info('Clicked ok')
       axios({
-        url: 'http://localhost/zyy1/doctor/redoc',
+        url: 'http://localhost/zyy/doctor/redoc',
         method: 'post',
         data: this.correctdoc,
         transformRequest: function (obj) {
@@ -102,7 +102,7 @@ export default {
       this.$Message.info('Clicked cancel')
       this.send()
       axios({
-        url: 'http://localhost/zyy1/doctor/deldoc',
+        url: 'http://localhost/zyy/doctor/deldoc',
         method: 'post',
         data: this.correctdoc,
         transformRequest: function (obj) {
@@ -125,7 +125,7 @@ export default {
     send () {
       axios({
         method: 'get',
-        url: 'http://localhost/zyy1/doctor/getdoc'
+        url: 'http://localhost/zyy/doctor/getdoc'
       }).then((res) => {
         this.formInline = res.data
         console.log(this.formInline)
