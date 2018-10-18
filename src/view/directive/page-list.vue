@@ -1,68 +1,121 @@
 <template>
-    <Card style="width:500px;height:600px">
-        <p slot="title">
-            <Icon type="ios-film-outline"></Icon>
-            {{}}
-        </p>
-        <a href="#" slot="extra" @click.prevent="changeLimit">
-            <Icon type="ios-loop-strong"></Icon>
-           张三   2018,9.1
-        </a>
- <p>
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo.
-Proin sodales pulvinar sic tempor. Sociis natoque penatibus et magnis dis parturient montes,
-nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci,
-sed rhoncus pronin sapien nunc accuan eget.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo.
-Proin sodales pulvinar sic tempor. Sociis natoque penatibus et magnis dis parturient montes,
-nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci,
-sed rhoncus pronin sapien nunc accuan eget.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo.
-
-</p>
-
-<div style="text-align :center">
- <Button type="primary" >点击修改</Button>
-</div>
-
-    </Card>
+  <div class="artical">
+    <Form ref="formInline" :model="formInline" :rules="ruleInline" method="post" inline>
+      <FormItem prop="title" class="formitem">
+          <Input type="text" v-model="formInline.title" placeholder="文章标题" name="name">
+              <Icon type="ios-person-outline" slot="prepend"></Icon>
+          </Input>
+      </FormItem>
+      <FormItem prop="name" class="formitem">
+          <Input type="text" v-model="formInline.name" placeholder="作者名" name="goal">
+              <Icon type="ios-calculator-outline" slot="prepend"></Icon>
+          </Input>
+      </FormItem>
+      <FormItem prop="type" class="formitem">
+          <Input type="text" v-model="formInline.type" placeholder="文章类型" name="time">
+              <Icon type="ios-lock-outline" slot="prepend"></Icon>
+          </Input>
+      </FormItem>
+      <FormItem  prop="desc" class="formitem">
+          <Input v-model="formInline.desc" type="textarea" :autosize="{minRows: 4,maxRows: 8}" placeholder="文章内容" name="desc"></Input>
+      </FormItem>
+      <FormItem>
+          <Button type="primary" @click="submit()">点击保存</Button>
+      </FormItem>
+    </Form>
+  </div>
 </template>
-// 传
 
 <script>
+import axios from 'axios'
 export default {
   name: 'page-list',
   data () {
-    return {}
-  },
-  methods: {
-    changeLimit () {
-      function getArrayItems (arr, num) {
-        const temp_array = []
-        for (let index in arr) {
-          temp_array.push(arr[index])
-        }
-        const return_array = []
-        for (let i = 0; i < num; i++) {
-          if (temp_array.length > 0) {
-            const arrIndex = Math.floor(Math.random() * temp_array.length)
-            return_array[i] = temp_array[arrIndex]
-            temp_array.splice(arrIndex, 1)
-          } else {
-            break
-          }
-        }
-        return return_array
+    return {
+      formInline: {
+        title: '',
+        name: '',
+        type: '',
+        desc: ''
+      },
+      ruleInline: {
+        title: [
+          { required: true, message: '请填写文章标题', trigger: 'blur' }
+        ],
+        name: [
+          { required: true, message: '请填写作者', trigger: 'blur' }
+        ],
+        type: [
+          { required: true, message: '请填写文章类型', trigger: 'blur' }
+        ],
+        desc: [
+          { required: true, message: '请填写文章内容', trigger: 'blur' }
+        ]
       }
     }
   },
-  mounted () {
-    this.changeLimit()
+  methods: {
+    submit () {
+      alert('添加成功')
+      axios({
+        url: 'http://localhost/zyy/doctor/addarticle',
+        method: 'post',
+        data: this.formInline,
+        transformRequest: function (obj) {
+          var str = []
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]))
+          }
+          return str.join('&')
+        }
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+    }
   }
 }
 </script>
+<style>
+  .artical{
+        /* background: red; */
+        position: relative;
+        left: 400px;
+        width: 100px;
+    }
+    .formitem{
+        /* background: blue; */
+        position: absolute;
+        width: 300px;
+    }
+    .formitem:nth-child(1){
+        top: 0;
+    }
+    .formitem:nth-child(2){
+        top: 70px;
+    }
+    .formitem:nth-child(3){
+        top: 140px;
+    }
+    .formitem:nth-child(4){
+        top: 210px;
+    }
+    .formitem:nth-child(5){
+        top: 280px;
+    }
+    .formitem:nth-child(6){
+        top: 350px;
+    }
+
+    .artical button:nth-child(1){
+        position: absolute;
+        top: 400px;
+    }
+    .artical button:nth-child(2){
+        position: absolute;
+        left: -350px;
+        top: 0px;
+        /* width: 100px; */
+    }
+</style>
