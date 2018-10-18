@@ -3,7 +3,7 @@
         <Col span="22" offset="1" v-for="value in formInline" :key="value.index">
             <Card dis-hover>
                 <p slot="title">{{value.article_title}}</p>
-                <p style="font-size: 12px;color: #000">文章作者：{{value.article_id}}  文章类型：{{value.article_class}}</p>
+                <p style="font-size: 12px;color: #000">文章作者：{{value.article_did}}  文章类型：{{value.article_class}}</p>
                 <p>{{value.article_content}}</p>
                 <p class="goDetail" style="color: #3399ff;font-size: 10px;float: right" @click="goDetail()">查看详情</p>
             </Card>            

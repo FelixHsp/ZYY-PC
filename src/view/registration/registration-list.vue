@@ -3,15 +3,17 @@
     <Tabs type="card">
         <Tab-pane label="当前挂号">
           <card v-for="(val,idx) in left" :key="idx"><div>
-            <span class="span">用户名：{{val.r_uid}}</span>
-            <span class="span">挂号医生：{{val.r_did}}</span>
+            <span class="span">用户名：{{val.user_name}}</span>
+            <span class="span">患者：{{val.r_iller}}</span>
+            <span class="span">挂号医生：{{val.doctor_name}}</span>
             <span class="span">挂号日期：{{val.r_time}}</span>
           </div></card>
         </Tab-pane>
         <Tab-pane label="往期挂号">
           <card v-for="(val,idx) in right" :key="idx"><div>
-            <span class="span">用户名：{{val.r_uid}}</span>
-            <span class="span">挂号医生：{{val.r_did}}</span>
+            <span class="span">用户名：{{val.user_name}}</span>
+            <span class="span">患者：{{val.r_iller}}</span>
+            <span class="span">挂号医生：{{val.doctor_name}}</span>
             <span class="span">挂号日期：{{val.r_time}}</span>
             <span class="span">就诊情况：{{val.yorn}}</span>
           </div></card>
