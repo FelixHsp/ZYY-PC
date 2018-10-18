@@ -95,7 +95,7 @@ export default [{
     name: 'directive',
     meta: {
       icon: 'ios-apps',
-      title: '就医列表',
+      title: '就医指南',
       hide: true
     },
     component: Main,
@@ -104,7 +104,7 @@ export default [{
         name: 'directive_page',
         meta: {
           icon: 'ios-navigate',
-          title: '就医指南'
+          title: '文章详情'
         },
         component: () =>
           import('@/view/directive/directive.vue')
