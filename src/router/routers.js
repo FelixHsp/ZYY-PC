@@ -118,7 +118,8 @@ export default [{
         },
         component: () =>
           import('@/view/directive/page-list.vue')
-      },
+      }
+      
     ]
   },
 
