@@ -79,7 +79,7 @@ export default {
     submit () {
       alert('添加成功')
       axios({
-        url: 'http://localhost/zyy1/doctor/adddoc',
+        url: 'http://localhost/zyy/doctor/adddoc',
         method: 'post',
         data: this.formInline,
         transformRequest: function (obj) {
