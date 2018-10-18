@@ -5,7 +5,7 @@
                 <p slot="title">{{value.article_title}}</p>
                 <p style="font-size: 12px;color: #000">文章作者：{{value.article_id}}  文章类型：{{value.article_class}}</p>
                 <p>{{value.article_content}}</p>
-                <p style="color: #3399ff;font-size: 10px;float: right" @click="goDetail(index)">查看详情</p>
+                <p class="goDetail" style="color: #3399ff;font-size: 10px;float: right" @click="goDetail()">查看详情</p>
             </Card>            
         </Col>
     </Row>
@@ -17,21 +17,13 @@ export default {
   name: "directive",
   data() {
     return {
-      doctor,
-      modal1: false,
-      formInline: [],
-      correctdoc: {}
+      formInline: []
     };
   },
   created() {
     this.send();
   },
   methods: {
-    Add: function() {
-      this.$router.push({
-        name: "page-list"
-      });
-    },
     ok() {
       this.$Message.info("Clicked ok");
       axios({
@@ -75,10 +67,17 @@ export default {
           console.log(err);
         });
     },
-    goDetail(index) {
-      this.modal1 = true;
-      this.correctdoc = this.formInline[index];
+    goDetail() {
+      this.$router.push({
+        path: "page_list_page",
+        name: "page_list_page",
+        params: {
+          key: "key",
+          msgKey: this.msg
+        }
+      });
     },
+
     send() {
       axios({
         method: "get",
@@ -91,3 +90,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.goDetail {
+  cursor: pointer;
+}
+</style>
