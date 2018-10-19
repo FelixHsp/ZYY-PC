@@ -1,5 +1,5 @@
 <template>
-  <i-form :model="formItem" :label-width="80" action="http://localhost/zyy/User/addills" method="post">
+  <i-form :model="formItem" :label-width="80" method="post">
     <Form-item label="病种名称">
       <i-input v-model="formItem.input" placeholder="请输入" name="title"></i-input>
     </Form-item>
@@ -50,11 +50,11 @@ export default {
         }
       }).then(res => {
         alert(res.data);
+        // this.$router.push('/illclass/illclass_details_page');
         console.log(res)
       }).catch(err => {
         console.log(err)
       })
-      this.$Message.info('添加成功');
 
     }
 }

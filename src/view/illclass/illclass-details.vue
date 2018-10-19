@@ -12,7 +12,7 @@
         <i-button type="primary" @click="goback" id="back">
             &lt;后退
         </i-button>
-        <i-form :model="formItem" :label-width="80" action="http://localhost/zyy/User/change" method="post">
+        <i-form :model="formItem" :label-width="80" method="post">
           <Form-item label="病症名称">
             <i-input v-model="formItem.input" placeholder="请输入" name="title"></i-input>
           </Form-item>
@@ -25,7 +25,7 @@
         </i-form>
     </div>
     <Card v-show="modal2" id="form">
-      <form action="http://localhost/zyy/User/delete" method="post">
+      <form method="post">
         <i-input :value.sync="formItem.input" name="title" v-show="false"></i-input>
         <i-input :value.sync="formItem.textarea" name="content" v-show="false"></i-input>
         <div id="delete">确认删除？</div>
@@ -37,11 +37,7 @@
     </card>
   </div>
 </template>
-<script>
-export default {
 
-}
-</script>
 
 <script>
 import PasteEditor from '_c/paste-editor'
@@ -68,9 +64,7 @@ export default {
         textarea: '',
         iid:''
       },
-      illdata:{
-
-      }
+      illdata:[],
     }
   },
   created() {
