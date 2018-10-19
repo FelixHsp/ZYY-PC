@@ -113,10 +113,16 @@ export default {
       this.modal2=true;
     },
     get(){
-      getIllData().then(res => {
-        this.illdata = res.data.data;
-      }).catch(err => {
-        console.log(err)
+      // getIllData().then(res => {
+      //   this.illdata = res.data.data;
+      // }).catch(err => {
+      //   console.log(err)
+      // })
+      axios({
+        method: 'get',
+        url: 'http://localhost/zyy/User/allills'
+      }).then((res) => {
+        this.illdata = res.data.data
       })
     },
     yes(){
