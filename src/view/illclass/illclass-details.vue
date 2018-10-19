@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1 id="header">妇科常见疾病</h1>
+    <h1 id="header">疾病列表</h1>
     <Row>
-        <i-col span="8" v-for="(val,idx) in illdata" :key= "idx" ><Card><div @click="go(idx)" class="ill">{{val.ill_title}}</div></Card></i-col>
-        <i-col span="8"  ><Card><div @click="on()" class="ill" style="fontSize:200px;">+</div></Card></i-col>
+        <i-col span="24" v-for="(val,idx) in illdata" :key= "idx" ><Card><div @click="go(idx)" class="ill">{{val.ill_title}}<span id="span">编辑&详情</span></div></Card></i-col>
+        <i-col span="24" ><Card><div @click="on()" class="ill">点此添加病种</div></Card></i-col>
     </Row>
     <card 
       v-show="modal1"
@@ -99,6 +99,7 @@ export default {
           return str.join('&')
         }
       }).then(res => {
+        this.modal1=false;
         alert('更改成功');
         this.get();
         console.log(res)
@@ -157,10 +158,9 @@ font-size: 30px;
 color: #000;
 }
 .ill{
-  width: 300px;
-  height: 200px;
-  text-align: center;
-  line-height: 200px;
+  width: 100%;
+  height: 20px;
+  line-height: 20px;
   font-size: 20px;
   font-weight: bold;
   margin-right: 50px;
@@ -201,7 +201,7 @@ color: #000;
   height: 300px;
   background: #ccc;
   position: absolute;
-  top: 50px;
+  top: 0px;
   left: 100px;
 }
 #sub{
@@ -222,5 +222,8 @@ color: #000;
   font-size: 30px;
   position: relative;
   top: 100px;
+}
+#span{
+  float: right;
 }
 </style>
