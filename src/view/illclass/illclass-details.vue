@@ -70,6 +70,9 @@ export default {
   created() {
     this.get();
   },
+  activated(){
+    this.get();
+  },
   methods: {
     go (idx) {
       this.modal1=true;
