@@ -29,23 +29,25 @@
           @on-ok="ok"
           @on-cancel="cancel"
           cancelText= '删除'
+          :closable="false"
+          :mask-closable="false"
           >
           <Form>
             </FormItem>
-              <Input v-model="correctdoc.doctor_name" class="correctinput" name="name">
+              <Input v-model="correctdoc.doctor_name" class="correctinput" placeholder="医生姓名" name="name">
                 <Icon type="ios-contact-outline" slot="prefix" />
               </Input>
             </FormItem>
-            <Input v-model="correctdoc.doctor_place" class="correctinput" name="goal">
+            <Input v-model="correctdoc.doctor_place" placeholder="医生职称" class="correctinput" name="goal">
               <Icon type="ios-briefcase-outline" slot="prefix" />
             </Input>
-            <Input v-model="correctdoc.doctor_job" class="correctinput" name="time">
+            <Input v-model="correctdoc.doctor_job" placeholder="从医年限" class="correctinput" name="time">
               <Icon type="ios-bookmark-outline" slot="prefix" />
             </Input>
-            <Input v-model="correctdoc.doctor_special" class="correctinput" name="special">
+            <Input v-model="correctdoc.doctor_special" placeholder="擅长病种" class="correctinput" name="special">
               <Icon type="ios-medkit-outline" slot="prefix" />
             </Input>
-            <Input v-model="correctdoc.doctor_message" class="correctinput" name="desc">
+            <Input v-model="correctdoc.doctor_message" placeholder="医生简介" class="correctinput" name="desc">
               <Icon type="ios-paper-outline" slot="prefix" />
             </Input>
           </Form>
