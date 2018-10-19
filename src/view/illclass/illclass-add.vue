@@ -50,7 +50,7 @@ export default {
         }
       }).then(res => {
         alert(res.data);
-        // this.$router.push('/illclass/illclass_details_page');
+        this.$router.push('/illclass/illclass_details_page');
         console.log(res)
       }).catch(err => {
         console.log(err)
