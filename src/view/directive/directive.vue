@@ -17,20 +17,20 @@
         <i-button type="primary" @click="goback" id="back">
             &lt;后退
         </i-button>
-        <i-form :model="formItem" :label-width="80" method="post">
+        <i-form :model="formItem" :label-width="80" method="post" action="http://localhost/zyy/doctor/rearticle">
           <Form-item label="文章标题">
-            <i-input :value.sync="formItem.article_title" placeholder="请输入"  name="title"></i-input>
+            <i-input v-model="formItem.article_title" placeholder="请输入"  name="title"></i-input>
           </Form-item>
           <Form-item label="文章作者">
-            <i-input :value.sync="formItem.article_did" name="did" :autosize="{minRows: 2,maxRows: 8}" placeholder="请输入..."></i-input>
+            <i-input v-model="formItem.article_did" name="did" :autosize="{minRows: 2,maxRows: 8}" placeholder="请输入..."></i-input>
           </Form-item>
           <Form-item label="文章类型">
-            <i-input :value.sync="formItem.article_class" name="class" :autosize="{minRows: 2,maxRows: 8}" placeholder="请输入..."></i-input>
+            <i-input v-model="formItem.article_class" name="class" :autosize="{minRows: 2,maxRows: 8}" placeholder="请输入..."></i-input>
           </Form-item>
           <Form-item label="文章详情">
-            <i-input :value.sync="formItem.article_content" type="textarea" name="content" :autosize="{minRows: 2,maxRows: 8}" placeholder="请输入..."></i-input>
+            <i-input v-model="formItem.article_content" type="textarea" name="content" :autosize="{minRows: 2,maxRows: 8}" placeholder="请输入..."></i-input>
           </Form-item>          
-          <input type="text" :value.sync="formItem.aid" name="aid" v-show="false">
+          <input type="text" v-model="formItem.aid" name="aid" v-show="false">
           <input type="button" id="btnl" @click="info" value="更改">
           <input type="button" id="btnr" @click="info1" value="删除">
         </i-form>
@@ -48,18 +48,7 @@ export default {
     return {
       formInline: [],
       formItem: {
-        input: '',
-        select: '',
-        radio: 'male',
-        checkbox: [],
-        switch: true,
-        date: '',
-        time: '',
-        slider: [20, 50],
-        textarea: '',
-        aid:'',
-        did:'',
-        type:''
+
       },
       modal1:false,
     };
@@ -71,13 +60,12 @@ export default {
     goDetail(idx) {
       this.modal1=true;
       this.formItem=this.formInline[idx]
-      console.log(this.formItem)
     },
     goback (){
       this.modal1=false;
-      console.log(this.formItem)
     },
     info () {
+      this.modal1=false;
       axios({
         url: 'http://localhost/zyy/doctor/rearticle',
         method: 'post',
@@ -99,7 +87,6 @@ export default {
       })
     },
     info1 () {
-      
       this.modal1=false;
       axios({
         url: 'http://localhost/zyy/doctor/delarticle',

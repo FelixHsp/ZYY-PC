@@ -164,7 +164,7 @@ export default [{
         path: 'list_page',
         name: 'list_page',
         meta: {
-          icon: '_qq',
+          icon: 'md-albums',
           title: '挂号列表'
         },
         component: () => import('@/view/registration/registration-list.vue')

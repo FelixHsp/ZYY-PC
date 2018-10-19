@@ -14,13 +14,13 @@
         </i-button>
         <i-form :model="formItem" :label-width="80" action="http://localhost/zyy/User/change" method="post">
           <Form-item label="病症名称">
-            <i-input :value.sync="formItem.input" placeholder="请输入" name="title"></i-input>
+            <i-input v-model="formItem.input" placeholder="请输入" name="title"></i-input>
           </Form-item>
           <Form-item label="病症详情">
-            <i-input :value.sync="formItem.textarea" type="textarea" name="content" :autosize="{minRows: 2,maxRows: 8}" placeholder="请输入..."></i-input>
+            <i-input v-model="formItem.textarea" type="textarea" name="content" :autosize="{minRows: 2,maxRows: 8}" placeholder="请输入..."></i-input>
           </Form-item>
-          <input type="text" :value.sync="formItem.iid" name="iid" v-show="false">
-          <input type="submit" id="btnl" @click="info" value="更改">
+          <input type="text" v-model="formItem.iid" name="iid" v-show="false">
+          <input type="button" id="btnl" @click="info" value="更改">
           <input type="button" id="btnr" @click="info1" value="删除">
         </i-form>
     </div>
@@ -29,7 +29,7 @@
         <i-input :value.sync="formItem.input" name="title" v-show="false"></i-input>
         <i-input :value.sync="formItem.textarea" name="content" v-show="false"></i-input>
         <div id="delete">确认删除？</div>
-        <input type="submit" value="确认" id="sub">
+        <input type="button" value="确认" id="sub" @click="yes()">
         <input type="button" value="取消" @click="modal2=false" id="but">
       </form>
     </Card>
@@ -46,6 +46,7 @@ export default {
 <script>
 import PasteEditor from '_c/paste-editor'
 import { getIllData } from '@/api/data'
+import axios from "axios"
 export default {
   name: 'illclass_details_page',
   components: {
@@ -72,6 +73,9 @@ export default {
       }
     }
   },
+  created() {
+    this.get();
+  },
   methods: {
     go (idx) {
       this.modal1=true;
@@ -86,19 +90,59 @@ export default {
       this.modal1=false;
     },
     info () {
-      this.$Message.info('更改成功');
+      axios({
+        url: 'http://localhost/zyy/User/change',
+        method: 'post',
+        data: this.formItem,
+        transformRequest: function (obj) {
+          var str = []
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]))
+          }
+          return str.join('&')
+        }
+      }).then(res => {
+        alert('更改成功');
+        this.get();
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
     },
     info1 () {
       this.modal2=true;
-    }
-  },
-  created() {
-    getIllData().then(res => {
+    },
+    get(){
+      getIllData().then(res => {
         this.illdata = res.data.data;
       }).catch(err => {
         console.log(err)
       })
-  }
+    },
+    yes(){
+      this.modal2=false;
+      this.modal1=false;
+      axios({
+        url: 'http://localhost/zyy/User/delete',
+        method: 'post',
+        data: this.formItem,
+        transformRequest: function (obj) {
+          var str = []
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]))
+          }
+          return str.join('&')
+        }
+      }).then(res => {
+        alert('删除成功');
+        this.get();
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+  },
+  
 }
 </script>
 

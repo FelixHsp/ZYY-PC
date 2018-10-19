@@ -100,7 +100,7 @@ export default {
     },
     cancel () {
       this.$Message.info('Clicked cancel')
-      this.send()
+
       axios({
         url: 'http://localhost/zyy/doctor/deldoc',
         method: 'post',
@@ -114,6 +114,7 @@ export default {
         }
       }).then(res => {
         console.log(res)
+        this.send();
       }).catch(err => {
         console.log(err)
       })
