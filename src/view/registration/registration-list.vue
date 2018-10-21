@@ -8,17 +8,6 @@
           <Table border :columns="columns8" :data="data7"></Table>
         </Tab-pane>
     </Tabs>
-    <!-- <Modal
-      v-model="modal1"
-      title="用户详细信息"
-      @on-ok="ok"
-      @on-cancel="cancel"
-      cancelText= '删除'
-      :closable="false"
-      :mask-closable="false"
-      >
-      aaa
-    </Modal> -->
   </div>
 </template>
 <script>
