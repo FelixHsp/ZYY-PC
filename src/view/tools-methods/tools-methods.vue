@@ -1,14 +1,15 @@
 <template>
-    <Table border :columns="columns7" :data="data6"></Table>
+    <Table border :columns="columns7" :data="users"></Table>
 </template>
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
       columns7: [
         {
-          title: 'Name',
-          key: 'name',
+          title: '用户姓名',
+          key: 'user_name',
           render: (h, params) => {
             return h('div', [
               h('Icon', {
@@ -16,79 +17,71 @@ export default {
                   type: 'person'
                 }
               }),
-              h('strong', params.row.name)
+              h('strong', params.row.user_name)
             ])
           }
         },
         {
-          title: 'Email',
-          key: 'emalie'
+          title: '用户联系方式',
+          key: 'user_phone'
         },
         {
-          title: 'Creat-Time',
-          key: 'creattime'
+          title: '用户创建日期',
+          key: 'user_birth'
         },
         {
           title: 'Handle',
           key: 'handle',
           width: 150,
           align: 'center',
-          render: (h, params) => {
+           render: (h, params) => {
             return h('div', [
-              h(
-                'Button',
-                {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index)
+                h('Button', {
+                    props: {
+                        type: 'primary',
+                        size: 'small'
+                    },
+                    style: {
+                        marginRight: '5px'
+                    },
+                    on: {
+                        click: () => {
+                            this.show(params.index)
+                        }
                     }
-                  }
-                },
-                '自定义删除'
-              )
-            ])
-          }
+                }, '查看详情')
+            ]);
+        }
         }
       ],
-      data6: [
-        {
-          name: 'John Brown',
-          emalie: 'xxx@163.com',
-          creattime: '2016-10-1'
-        },
-        {
-          name: 'Jim Green',
-          emalie: 'xxx@163.com',
-          creattime: '2016-10-1'
-        },
-        {
-          name: 'Joe Black',
-          emalie: 'xxx@163.com',
-          creattime: '2016-10-1'
-        },
-        {
-          name: 'Jon Snow',
-          emalie: 'xxx@163.com',
-          creattime: '2016-10-1'
-        }
+      users: [
+        
       ]
     }
+  },
+  created () {
+    this.get ()
   },
   methods: {
     show (index) {
       this.$Modal.info({
-        title: 'User Info',
-        content: `Name：${this.data6[index].name}<br>Age：${
-          this.data6[index].age
-        }<br>Address：${this.data6[index].address}`
+        title: '用户详情',
+        content: `姓名：${this.users[index].user_name}<br>联系方式：${
+          this.users[index].user_phone
+        }<br>创建日期：${this.users[index].user_birth}`
       })
     },
     remove (index) {
       this.data6.splice(index, 1)
+    },
+    get () {
+      axios({
+        method: 'get',
+        url: 'http://localhost/zyy/user/getusers'
+        }).then((res) => {
+          this.users = res.data
+          console.log(this.users)
+        })
     }
   }
 }
