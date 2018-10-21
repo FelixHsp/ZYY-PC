@@ -1,10 +1,6 @@
 <template>
   <div>
-    <h1 id="header">疾病列表</h1>
-    <Row>
-        <i-col span="24" v-for="(val,idx) in illdata" :key= "idx" ><Card><div @click="go(idx)" class="ill">{{val.ill_title}}<span id="span">编辑&详情</span></div></Card></i-col>
-        <i-col span="24" ><Card><div @click="on()" class="ill">点此添加病种</div></Card></i-col>
-    </Row>
+    <Table border :columns="columns7" :data="data6"></Table>
     <card 
       v-show="modal1"
       title="病症详情页" id="card">
@@ -50,6 +46,55 @@ export default {
   },
   data () {
     return {
+      columns7: [
+        {
+          title: '病症名称',
+          key: 'ill_title',
+          width:200,
+          render: (h, params) => {
+            return h('div', [
+              h('Icon', {
+                props: {
+                  type: 'person'
+                }
+              }),
+              h('strong', params.row.ill_title)
+            ]);
+          }
+      },
+        {
+          title: '病症详情',
+          key: 'ill_content',
+          align: 'center',
+        },
+        {
+          title: 'Action',
+          key: 'action',
+          width: 150,
+          align: 'center',
+          render: (h, params) => {
+          return h('div', [
+            h('Button', {
+              props: {
+                type: 'primary',
+                size: 'large'
+              },
+              style: {
+                marginRight: '5px'
+              },
+              on: {
+                click: () => {
+                  this.show(params.index)
+                }
+              }
+            }, '详情'),
+          ]);
+          }
+        }
+      ],
+      data6: [
+
+      ],
       modal1: false,
       modal2: false,
       formItem: {
@@ -64,7 +109,6 @@ export default {
         textarea: '',
         iid:''
       },
-      illdata:[],
     }
   },
   created() {
@@ -76,9 +120,9 @@ export default {
   methods: {
     go (idx) {
       this.modal1=true;
-      this.formItem.input=this.illdata[idx].ill_title;
-      this.formItem.textarea=this.illdata[idx].ill_content;
-      this.formItem.iid=this.illdata[idx].iid;
+      this.formItem.input=this.data6[idx].ill_title;
+      this.formItem.textarea=this.data6[idx].ill_content;
+      this.formItem.iid=this.data6[idx].iid;
     },
     on () {
       this.$router.push('/illclass/illclass_add_page')
@@ -120,7 +164,7 @@ export default {
         method: 'get',
         url: 'http://localhost/zyy/User/allills'
       }).then((res) => {
-        this.illdata = res.data.data
+        this.data6 = res.data.data;
       })
     },
     yes(){
@@ -144,7 +188,10 @@ export default {
       }).catch(err => {
         console.log(err)
       })
-    }
+    },
+    show (index) {
+      this.go(index);
+    },
   },
   
 }
