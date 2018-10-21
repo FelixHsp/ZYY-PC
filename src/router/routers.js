@@ -55,7 +55,7 @@ export default [{
         name: 'count_to_page',
         meta: {
           icon: 'ios-contact',
-          title: '医生详情页'
+          title: '医生列表'
         },
         component: () =>
           import('@/view/components/count-to/count-to.vue')
