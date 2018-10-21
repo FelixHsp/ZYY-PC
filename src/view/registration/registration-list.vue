@@ -2,24 +2,13 @@
   <div>
     <Tabs type="card">
         <Tab-pane label="当前挂号">
-          <card v-for="(val,idx) in left" :key="idx"><div>
-            <span class="span">用户名：{{val.user_name}}</span>
-            <span class="span">患者：{{val.r_name}}</span>
-            <span class="span">挂号医生：{{val.doctor_name}}</span>
-            <span class="span">挂号日期：{{val.r_time}}</span>
-          </div></card>
+          <Table border :columns="columns7" :data="data6"></Table>
         </Tab-pane>
         <Tab-pane label="往期挂号">
-          <card v-for="(val,idx) in right" :key="idx"><div>
-            <span class="span">用户名：{{val.user_name}}</span>
-            <span class="span">患者：{{val.r_name}}</span>
-            <span class="span">挂号医生：{{val.doctor_name}}</span>
-            <span class="span">挂号日期：{{val.r_time}}</span>
-            <span class="span">就诊情况：{{val.yorn}}</span>
-          </div></card>
+          <Table border :columns="columns8" :data="data7"></Table>
         </Tab-pane>
     </Tabs>
-    <Modal
+    <!-- <Modal
       v-model="modal1"
       title="用户详细信息"
       @on-ok="ok"
@@ -29,7 +18,7 @@
       :mask-closable="false"
       >
       aaa
-    </Modal>
+    </Modal> -->
   </div>
 </template>
 <script>
@@ -48,13 +37,163 @@ export default {
       Data:{
 
       },
-      left:[
-
+      columns7: [
+        {
+          title: '用户名',
+          key: 'user_name',
+          render: (h, params) => {
+            return h('div', [
+              h('Icon', {
+                props: {
+                  type: 'person'
+                }
+              }),
+              h('strong',{
+                style: {
+                  cursor: 'pointer'
+                },
+                on: {
+                click: () => {
+                  this.user(params.index)
+                }
+              }
+              }, params.row.user_name)
+            ]);
+          }
+        },
+        {
+          title: '患者姓名',
+          key: 'r_name'
+        },
+        {
+          title: '挂号医生',
+          key: 'doctor_name',
+          render: (h, params) => {
+            return h('div', [
+              h('strong',{
+                style: {
+                  cursor: 'pointer'
+                },
+                on: {
+                click: () => {
+                  this.doctor(params.index)
+                }
+              }
+              }, params.row.doctor_name)
+            ]);
+          }
+        },
+        {
+          title: '挂号日期',
+          key: 'r_time'
+        },
+        {
+          title: 'Action',
+          key: 'action',
+          width: 150,
+          align: 'center',
+          render: (h, params) => {
+          return h('div', [
+            h('Button', {
+              props: {
+                type: 'primary',
+                size: 'large'
+              },
+              style: {
+                marginRight: '5px'
+              },
+              on: {
+                click: () => {
+                  this.show(params.index)
+                }
+              }
+            }, '详情'),
+          ]);
+          }
+        }
       ],
-      right:[
+      columns8: [
+        {
+          title: '用户名',
+          key: 'user_name',
+          render: (h, params) => {
+            return h('div', [
+              h('Icon', {
+                props: {
+                  type: 'person'
+                }
+              }),
+              h('strong',{
+                style: {
+                  cursor: 'pointer'
+                },
+                on: {
+                click: () => {
+                  this.user1(params.index)
+                }
+              }
+              }, params.row.user_name)
+            ]);
+          }
+        },
+        {
+          title: '患者姓名',
+          key: 'r_name'
+        },
+        {
+          title: '挂号医生',
+          key: 'doctor_name',
+          render: (h, params) => {
+            return h('div', [
+              h('strong',{
+                style: {
+                  cursor: 'pointer'
+                },
+                on: {
+                click: () => {
+                  this.doctor(params.index)
+                }
+              }
+              }, params.row.doctor_name)
+            ]);
+          }
+        },
+        {
+          title: '挂号日期',
+          key: 'r_time'
+        },
+        {
+          title: 'Action',
+          key: 'action',
+          width: 150,
+          align: 'center',
+          render: (h, params) => {
+          return h('div', [
+            h('Button', {
+              props: {
+                type: 'primary',
+                size: 'large'
+              },
+              style: {
+                marginRight: '5px'
+              },
+              on: {
+                click: () => {
+                  this.show1(params.index)
+                }
+              }
+            }, '详情'),
+          ]);
+        }
+      }
+    ],
+    data6: [
 
-      ]
-    }
+    ],
+    data7: [
+
+    ]
+    } 
   },
   methods: {
     // shishi(){
@@ -65,16 +204,52 @@ export default {
     //     console.log(err)
     //   })
     // }
+    show (index) {
+      this.$Modal.info({
+        title: '挂号详情',
+        content: `用户名：${this.data6[index].user_name}<br>患者姓名：${this.data6[index].r_name}<br>挂号医生：${this.data6[index].doctor_name}<br>挂号日期：${this.data6[index].r_time}`
+      })
+    },
+    show1 (index) {
+      this.$Modal.info({
+        title: '挂号详情',
+        content: `用户名：${this.data7[index].user_name}<br>患者姓名：${this.data7[index].r_name}<br>挂号医生：${this.data7[index].doctor_name}<br>挂号日期：${this.data6[index].r_time}`
+      })
+    },
+    user (index) {
+      this.$Modal.info({
+        title: '用户详情',
+        content: `用户名：${this.data6[index].user_name}<br>用户性别：${this.data6[index].user_sex}<br>用户电话：${this.data6[index].user_phone}<br>用户身份证号：${this.data6[index].user_idnumber}`
+      })
+    },
+    user1 (index) {
+      this.$Modal.info({
+        title: '用户详情',
+        content: `用户名：${this.data7[index].user_name}<br>用户性别：${this.data7[index].user_sex}<br>用户电话：${this.data7[index].user_phone}<br>用户身份证号：${this.data7[index].user_idnumber}`
+      })
+    },
+    doctor (index) {
+      this.$Modal.info({
+        title: '医生详情',
+        content: `医生姓名：${this.data6[index].doctor_name}<br>医生职位：${this.data6[index].doctor_job}<br>医生工作地点：${this.data6[index].doctor_place}<br>医生擅长：${this.data6[index].doctor_special}`
+      })
+    },
+    doctor1 (index) {
+      this.$Modal.info({
+        title: '医生详情',
+        content: `医生姓名：${this.data7[index].doctor_name}<br>医生职位：${this.data7[index].doctor_job}<br>医生工作地点：${this.data7[index].doctor_place}<br>医生擅长：${this.data7[index].doctor_special}`
+      })
+    }
   },
   created() {
     getData().then(res => {
-      console.log(res.data)
-        this.Data = res.data.data;
+        this.Data = res.data;
+        console.log(res);
         this.Data.forEach(val => {
           if(val.r_tag == "未过期"){
-            this.left.push(val);
+            this.data6.push(val);
           }else{
-            this.right.push(val);
+            this.data7.push(val);
           }
         });
       }).catch(err => {
