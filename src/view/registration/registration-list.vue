@@ -4,7 +4,7 @@
         <Tab-pane label="当前挂号">
           <card v-for="(val,idx) in left" :key="idx"><div>
             <span class="span">用户名：{{val.user_name}}</span>
-            <span class="span">患者：{{val.r_iller}}</span>
+            <span class="span">患者：{{val.r_name}}</span>
             <span class="span">挂号医生：{{val.doctor_name}}</span>
             <span class="span">挂号日期：{{val.r_time}}</span>
           </div></card>
@@ -12,13 +12,24 @@
         <Tab-pane label="往期挂号">
           <card v-for="(val,idx) in right" :key="idx"><div>
             <span class="span">用户名：{{val.user_name}}</span>
-            <span class="span">患者：{{val.r_iller}}</span>
+            <span class="span">患者：{{val.r_name}}</span>
             <span class="span">挂号医生：{{val.doctor_name}}</span>
             <span class="span">挂号日期：{{val.r_time}}</span>
             <span class="span">就诊情况：{{val.yorn}}</span>
           </div></card>
         </Tab-pane>
     </Tabs>
+    <Modal
+      v-model="modal1"
+      title="用户详细信息"
+      @on-ok="ok"
+      @on-cancel="cancel"
+      cancelText= '删除'
+      :closable="false"
+      :mask-closable="false"
+      >
+      aaa
+    </Modal>
   </div>
 </template>
 <script>
@@ -57,6 +68,7 @@ export default {
   },
   created() {
     getData().then(res => {
+      console.log(res.data)
         this.Data = res.data.data;
         this.Data.forEach(val => {
           if(val.r_tag == "未过期"){
