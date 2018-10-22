@@ -66,9 +66,9 @@ export default {
     show (index) {
       this.$Modal.info({
         title: '用户详情',
-        content: `姓名：${this.users[index].user_name}<br>联系方式：${
+        content: `姓名：${this.users[index].user_name}<br>性别：${this.users[index].user_sex}<br>联系方式：${
           this.users[index].user_phone
-        }<br>创建日期：${this.users[index].user_birth}`
+        }<br>创建日期：${this.users[index].user_birth}<br>身份证号：${this.users[index].user_idnumber}`
       })
     },
     remove (index) {
