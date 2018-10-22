@@ -16,20 +16,22 @@
               <Icon type="ios-lock-outline" slot="prepend"></Icon>
           </Input>
       </FormItem>
-      <FormItem  prop="desc" class="formitem">
-          <Input v-model="formInline.desc" type="textarea" :autosize="{minRows: 4,maxRows: 8}" placeholder="文章内容" name="desc"></Input>
-      </FormItem>
       <FormItem>
           <Button type="primary" @click="submit()">点击保存</Button>
       </FormItem>
     </Form>
+    <editor ref="editor" v-model="formInline.desc"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Editor from '_c/editor'
 export default {
   name: 'page-list',
+  components: {
+    Editor
+  },
   data () {
     return {
       formInline: {
@@ -78,44 +80,7 @@ export default {
 }
 </script>
 <style>
-  .artical{
-        /* background: red; */
-        position: relative;
-        left: 400px;
-        width: 100px;
-    }
     .formitem{
-        /* background: blue; */
-        position: absolute;
         width: 300px;
-    }
-    .formitem:nth-child(1){
-        top: 0;
-    }
-    .formitem:nth-child(2){
-        top: 70px;
-    }
-    .formitem:nth-child(3){
-        top: 140px;
-    }
-    .formitem:nth-child(4){
-        top: 210px;
-    }
-    .formitem:nth-child(5){
-        top: 280px;
-    }
-    .formitem:nth-child(6){
-        top: 350px;
-    }
-
-    .artical button:nth-child(1){
-        position: absolute;
-        top: 400px;
-    }
-    .artical button:nth-child(2){
-        position: absolute;
-        left: -350px;
-        top: 0px;
-        /* width: 100px; */
     }
 </style>
