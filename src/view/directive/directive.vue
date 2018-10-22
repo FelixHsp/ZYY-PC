@@ -1,19 +1,10 @@
 <template>
   <div>
-    <Row>
-        <Col span="22" offset="1" v-for=" (value,idx) in formInline" :key="idx">
-            <Card dis-hover>
-                <p slot="title">{{value.article_title}}</p>
-                <p style="font-size: 12px;color: #000">文章作者：{{value.article_did}}  文章类型：{{value.article_class}}</p>
-                <p>{{value.article_content}}</p>
-                <p class="goDetail" style="color: #3399ff;font-size: 10px;float: right" @click="goDetail(idx)">查看详情</p>
-            </Card>            
-        </Col>
-    </Row>
+    <Table border :columns="columns7" :data="data6"></Table>
     <card 
       v-show="modal1"
-      title="文章详情页" id="card">
-      <div>
+      title="文章详情" id="card">
+      <div id="div">
         <i-button type="primary" @click="goback" id="back">
             &lt;后退
         </i-button>
@@ -27,12 +18,12 @@
           <Form-item label="文章类型">
             <i-input v-model="formItem.article_class" name="class" :autosize="{minRows: 2,maxRows: 8}" placeholder="请输入..."></i-input>
           </Form-item>
-          <Form-item label="文章详情">
+          <!-- <Form-item label="文章详情">
             <i-input v-model="formItem.article_content" type="textarea" name="content" :autosize="{minRows: 2,maxRows: 8}" placeholder="请输入..."></i-input>
-          </Form-item>          
+          </Form-item> -->
+          <editor ref="editor" v-model="formItem.article_content"/>         
           <input type="text" v-model="formItem.aid" name="aid" v-show="false">
-          <input type="button" id="btnl" @click="info" value="更改">
-          <input type="button" id="btnr" @click="info1" value="删除">
+          <input type="button" id="btnl" @click="info" value="保存更改">
         </i-form>
     </div>
     </card>
@@ -41,16 +32,91 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"
+import Editor from '_c/editor'
 export default {
   name: "directive",
+  components: {
+    Editor
+  },
   data() {
     return {
-      formInline: [],
       formItem: {
 
       },
       modal1:false,
+      columns7: [
+        {
+          title: '文章标题',
+          key: 'article_title',
+          width:100,
+          render: (h, params) => {
+            return h('div', [
+              h('Icon', {
+                props: {
+                  type: 'person'
+                }
+              }),
+              h('strong', params.row.article_title)
+            ]);
+          }
+        },
+        {
+          title: '文章类型',
+          key: 'article_class',
+          width:100,
+        },
+        {
+          title: '文章作者',
+          key: 'article_did',
+          width:100,
+        },
+        {
+          title: '文章详情',
+          key: 'article_content'
+        },
+        {
+          title: 'Action',
+          key: 'action',
+          width: 150,
+          align: 'center',
+          render: (h, params) => {
+          return h('div', [
+            h('Button', {
+              props: {
+                type: 'primary',
+                size: 'small'
+              },
+              style: {
+                marginRight: '5px'
+              },
+              on: {
+                click: () => {
+                  this.goDetail(params.index)
+                }
+              }
+            }, '编辑'),
+            h('Button', {
+              props: {
+                type: 'primary',
+                size: 'small'
+              },
+              style: {
+                marginRight: '5px'
+              },
+              on: {
+                click: () => {
+                  this.delete(params.index)
+                }
+              }
+            }, '删除'),
+          ]);
+          }
+        }
+      ],
+      data6: [
+
+      ],
     };
   },
   created() {
@@ -58,14 +124,14 @@ export default {
   },
   methods: {
     goDetail(idx) {
-      this.modal1=true;
       this.formItem=this.formInline[idx]
+      this.$refs.editor.setHtml(this.formItem.article_content);
+      this.modal1=true;
     },
     goback (){
       this.modal1=false;
     },
     info () {
-      this.modal1=false;
       axios({
         url: 'http://localhost/zyy/doctor/rearticle',
         method: 'post',
@@ -86,8 +152,11 @@ export default {
         console.log(err)
       })
     },
-    info1 () {
-      this.modal1=false;
+    delete(idx){
+      this.formItem=this.formInline[idx];
+      this.info1();
+    },
+    info1 () { 
       axios({
         url: 'http://localhost/zyy/doctor/delarticle',
         method: 'post',
@@ -101,6 +170,7 @@ export default {
         }
       }).then(res => {
         alert('删除成功');
+        this.modal1=false;
         this.send();
         console.log(res)
       }).catch(err => {
@@ -114,6 +184,7 @@ export default {
         url: "http://localhost/zyy/user/article"
       }).then(res => {
         this.formInline = res.data;
+        this.data6 = res.data;
         console.log(this.formInline);
       });
     }
@@ -122,25 +193,19 @@ export default {
 </script>
 
 <style>
-.goDetail {
-  cursor: pointer;
-}
 #card{
   text-align: center;
-  width: 600px;
-  height: 400px;
+  width: 1000px;
+  height: 1000px;
   position: absolute;
-  left: 400px;
-  top: 100px;
+  left: 260px;
+  top: 0px;
+  z-index: 1;
+}
+#div{
+  text-align: left;
 }
 #btnl{
-  margin-left: 300px;
-  width: 50px;
-  height: 30px;
-}
-#btnr{
-  margin-left: 100px;
-  width: 50px;
   height: 30px;
 }
 #back{
