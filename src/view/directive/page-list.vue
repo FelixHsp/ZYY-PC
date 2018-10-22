@@ -1,17 +1,17 @@
 <template>
   <div class="artical">
     <Form ref="formInline" :model="formInline" :rules="ruleInline" method="post" inline>
-      <FormItem prop="title" class="formitem">
+      <FormItem prop="title" class="formitem1">
           <Input type="text" v-model="formInline.title" placeholder="文章标题" name="name">
               <Icon type="ios-person-outline" slot="prepend"></Icon>
           </Input>
       </FormItem>
-      <FormItem prop="name" class="formitem">
+      <FormItem prop="name" class="formitem1">
           <Input type="text" v-model="formInline.name" placeholder="作者名" name="goal">
               <Icon type="ios-calculator-outline" slot="prepend"></Icon>
           </Input>
       </FormItem>
-      <FormItem prop="type" class="formitem">
+      <FormItem prop="type" class="formitem1">
           <Input type="text" v-model="formInline.type" placeholder="文章类型" name="time">
               <Icon type="ios-lock-outline" slot="prepend"></Icon>
           </Input>
@@ -80,7 +80,7 @@ export default {
 }
 </script>
 <style>
-    .formitem{
+    .formitem1{
         width: 300px;
     }
 </style>
