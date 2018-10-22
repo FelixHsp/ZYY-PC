@@ -3,9 +3,10 @@
     <Form-item label="病种名称">
       <i-input v-model="formItem.input" placeholder="请输入" name="title"></i-input>
     </Form-item>
-    <Form-item label="病种描述">
+    <!-- <Form-item label="病种描述">
       <i-input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入..." name="content"></i-input>
-    </Form-item>
+    </Form-item> -->
+    <editor ref="editor" v-model="formItem.textarea"/>
     <input type="button" @click="info" id="submit" value="保存">
   </i-form>
 </template>
@@ -17,9 +18,13 @@ export default {
 
 <script>
 import { getArrayFromFile, getTableDataFromArray } from '@/libs/util'
-import axios from "axios";
+import axios from "axios"
+import Editor from '_c/editor'
 export default {
   name: 'illclass_add_page',
+  components: {
+    Editor
+  },
   data () {
     return {
       formItem: {
@@ -32,7 +37,7 @@ export default {
         time: '',
         slider: [20, 50],
         textarea: ''
-      }
+      },
     }
   },
   methods: {

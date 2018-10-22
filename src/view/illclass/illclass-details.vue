@@ -4,7 +4,7 @@
     <card 
       v-show="modal1"
       title="病症详情页" id="card">
-      <div>
+      <div id="div">
         <i-button type="primary" @click="goback" id="back">
             &lt;后退
         </i-button>
@@ -12,15 +12,16 @@
           <Form-item label="病症名称">
             <i-input v-model="formItem.input" placeholder="请输入" name="title"></i-input>
           </Form-item>
-          <Form-item label="病症详情">
+          <!-- <Form-item label="病症详情">
             <i-input v-model="formItem.textarea" type="textarea" name="content" :autosize="{minRows: 2,maxRows: 8}" placeholder="请输入..."></i-input>
-          </Form-item>
+          </Form-item> -->
+          <editor ref="editor" v-model="formItem.textarea"/>
           <input type="text" v-model="formItem.iid" name="iid" v-show="false">
-          <input type="button" id="btnl" @click="info" value="更改">
-          <input type="button" id="btnr" @click="info1" value="删除">
+          <input type="button" id="btnl" @click="info" value="保存更改">
         </i-form>
     </div>
-    <Card v-show="modal2" id="form">
+    </card>
+    <Card v-if="modal2" id="form">
       <form method="post">
         <i-input :value.sync="formItem.input" name="title" v-show="false"></i-input>
         <i-input :value.sync="formItem.textarea" name="content" v-show="false"></i-input>
@@ -30,7 +31,7 @@
       </form>
     </Card>
     
-    </card>
+    
   </div>
 </template>
 
@@ -38,11 +39,12 @@
 <script>
 import PasteEditor from '_c/paste-editor'
 import { getIllData } from '@/api/data'
+import Editor from '_c/editor'
 import axios from "axios"
 export default {
   name: 'illclass_details_page',
   components: {
-    PasteEditor
+    Editor
   },
   data () {
     return {
@@ -77,7 +79,7 @@ export default {
             h('Button', {
               props: {
                 type: 'primary',
-                size: 'large'
+                size: 'small'
               },
               style: {
                 marginRight: '5px'
@@ -87,7 +89,21 @@ export default {
                   this.show(params.index)
                 }
               }
-            }, '详情'),
+            }, '编辑'),
+            h('Button', {
+              props: {
+                type: 'primary',
+                size: 'small'
+              },
+              style: {
+                marginRight: '5px'
+              },
+              on: {
+                click: () => {
+                  this.infor1(params.index)
+                }
+              }
+            }, '删除'),
           ]);
           }
         }
@@ -119,10 +135,12 @@ export default {
   },
   methods: {
     go (idx) {
-      this.modal1=true;
       this.formItem.input=this.data6[idx].ill_title;
       this.formItem.textarea=this.data6[idx].ill_content;
       this.formItem.iid=this.data6[idx].iid;
+      this.$refs.editor.setHtml(this.formItem.textarea);
+      this.modal1=true;
+      console.log(this.formItem.textarea);
     },
     on () {
       this.$router.push('/illclass/illclass_add_page')
@@ -151,7 +169,10 @@ export default {
         console.log(err)
       })
     },
-    info1 () {
+    infor1(idx){
+      this.formItem.input=this.data6[idx].ill_title;
+      this.formItem.textarea=this.data6[idx].ill_content;
+      this.formItem.iid=this.data6[idx].iid;
       this.modal2=true;
     },
     get(){
@@ -169,7 +190,6 @@ export default {
     },
     yes(){
       this.modal2=false;
-      this.modal1=false;
       axios({
         url: 'http://localhost/zyy/User/delete',
         method: 'post',
@@ -198,58 +218,36 @@ export default {
 </script>
 
 <style lang="less">
-#header{
-width: 100%;
-text-align: center;
-font-size: 30px;
-color: #000;
-}
-.ill{
-  width: 100%;
-  height: 20px;
-  line-height: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  margin-right: 50px;
-  margin-bottom: 0;
-  color: #000;
-  cursor: pointer;
-}
-#add{
-  border: 1px solid ;
-  width: 300px;
-  height: 200px;
-}
 #card{
   text-align: center;
-  width: 600px;
-  height: 400px;
+  width: 1000px;
+  height: 600px;
   position: absolute;
-  left: 400px;
+  left: 260px;
   top: 100px;
+  z-index: 1;
+}
+#div{
+  text-align: left;
 }
 #btnl{
-  margin-left: 300px;
-  width: 50px;
   height: 30px;
 }
-#btnr{
-  margin-left: 100px;
-  width: 50px;
-  height: 30px;
-}
+
 #back{
   position: absolute;
   left: 5px;
   top: 10px;
 }
 #form{
+  text-align: center;
   width: 400px;
   height: 300px;
   background: #ccc;
   position: absolute;
-  top: 0px;
-  left: 100px;
+  top: 100px;
+  left: 500px;
+  z-index: 1;
 }
 #sub{
   width: 50px;
@@ -269,8 +267,5 @@ color: #000;
   font-size: 30px;
   position: relative;
   top: 100px;
-}
-#span{
-  float: right;
 }
 </style>
